@@ -81,23 +81,48 @@ class StopWatch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            min: 25,
+            minutes: 25,
             seconds: 0
         };
     }
+
+    tick() {
+        this.setState(state => ({
+            seconds: state.seconds + 1
+        }));
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.tick(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    formatTime(secs) {
+        let hours = Math.floor(secs / 3600);
+        let minutes = Math.floor(secs / 60) % 60;
+        let seconds = secs % 60;
+        return [hours, minutes, seconds]
+            .map(v => ('' + v).padStart(2, '0'))
+            .filter((v, i) => v !== '00' || i > 0)
+            .join(':');
+    }
+
     render() {
         return (
 
             <> <Row>
                 <Col>
                 <Jumbotron> 
-                    <h1> {this.state.min} </h1>
+                    <h1> {this.formatTime(this.state.minutes)} </h1>
                     </Jumbotron>
                 </Col>
                 <Col> <br/> <br /> <br /> <br />: </Col>
                 <Col>
                     <Jumbotron>
-                        <h1> {this.state.seconds} </h1>
+                        <h1> {this.formatTime(this.state.seconds)} </h1>
                     </Jumbotron>
                 </Col>
             </Row>
