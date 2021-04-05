@@ -77,11 +77,30 @@ class PamodoroHeader extends React.Component {
 }
 
 class StopWatch extends React.Component {
+    //initializing time state variables 
+    constructor(props) {
+        super(props);
+        this.state = {
+            min: 25,
+            seconds: 0
+        };
+    }
     render() {
         return (
 
-            <>
-                
+            <> <Row>
+                <Col>
+                <Jumbotron> 
+                    <h1> {this.state.min} </h1>
+                    </Jumbotron>
+                </Col>
+                <Col> <br/> <br /> <br /> <br />: </Col>
+                <Col>
+                    <Jumbotron>
+                        <h1> {this.state.seconds} </h1>
+                    </Jumbotron>
+                </Col>
+            </Row>
             </>
             )
         
@@ -90,6 +109,7 @@ class StopWatch extends React.Component {
 
 //passing in props here from CardSelect component 
 class ShowTimer extends React.Component {
+    
     render() {
         console.log("entered")
         console.log(this.props.basictimer)
@@ -110,13 +130,7 @@ class ShowTimer extends React.Component {
                     <br />
                     <Row>
                         <Col> </Col>
-                        <Card> 
-                            
-                            <Card.Body> 
-                                <Card.Title> Basic Timer </Card.Title>
-                                <p> Displaying stop watch </p>
-                            </Card.Body>
-                        </Card>
+                            <StopWatch />
                         <Col> </Col>
                     </Row>
                 </div>
