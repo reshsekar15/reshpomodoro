@@ -1,5 +1,6 @@
 {
   "name": "pamodoro",
+"homepage": "https://reshsekar15.github.io/reshpomodoro",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
