@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Button, Tabs, Tab, Sonnet, Jumbotron, Nav, Link, NavLink, Collapse, Navbar, NavDropdown } from 'react-bootstrap'
-import { Card, Row, Col, Modal, ModalBody, ModalFooter, ModalDialog, Alert, ProgressBar} from 'react-bootstrap'
+import { Card, Row, Col, Modal, ModalBody, ModalFooter, ModalDialog, Alert, ProgressBar, Container, Accordion, InputGroup} from 'react-bootstrap'
 
 
 class Square extends React.Component {
@@ -81,8 +81,7 @@ class StopWatch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            minutes: 25,
-            seconds: 0
+            start: false
         };
     }
 
@@ -92,8 +91,18 @@ class StopWatch extends React.Component {
         }));
     }
 
+    //called immediately after a component is initialized
     componentDidMount() {
-        this.interval = setInterval(() => this.tick(), 1000);
+        console.log("called?")
+        if (this.start) {
+            this.interval = setInterval(() => this.tick(), 1000);
+
+        }
+        else {
+            this.setState(state => ({
+                seconds: 0
+            }));
+        }
     }
 
     componentWillUnmount() {
@@ -113,24 +122,54 @@ class StopWatch extends React.Component {
     render() {
         return (
 
-            <> <Row>
+            <Container fluid> <Row>
+                
                 <Col>
-                <Jumbotron> 
-                    <h1> {this.formatTime(this.state.minutes)} </h1>
-                    </Jumbotron>
-                </Col>
-                <Col> <br/> <br /> <br /> <br />: </Col>
-                <Col>
+                    <Container>
                     <Jumbotron>
                         <h1> {this.formatTime(this.state.seconds)} </h1>
                     </Jumbotron>
+
+                    <Col> 
+                    <Col>
+                                <Button variant="primary" onClick={() => this.setState({start: true})}> Start </Button>
+                        </Col>
+                        </Col>
+                    </Container>
                 </Col>
+                    
             </Row>
-            </>
+            </Container>
             )
         
     }
 }
+
+
+class CustomTimer extends React.Component {
+    render() {
+        return (
+            <Container fluid>
+            <Card>
+                
+                <Card.Body>
+                    <Card.Header className="primary">
+                            Custom Timer
+                     </Card.Header>
+                        <br />
+                        <br />
+                        <Card.Text>
+                            What are some activities you've been avoiding? 
+                            </Card.Text>
+                        
+                </Card.Body>
+
+            </Card>
+            </Container>
+               )
+    }
+}
+
 
 //passing in props here from CardSelect component 
 class ShowTimer extends React.Component {
@@ -164,7 +203,16 @@ class ShowTimer extends React.Component {
         else if (this.props.customtimer) {
             return (
                 <div>
-                    <h1> This is  a custom timer </h1>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <Row>
+                        <Col> </Col>
+                        <CustomTimer />
+                        <Col> </Col>
+                    </Row>
+                    
                 </div>
             )
         }
